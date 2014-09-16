@@ -69,7 +69,7 @@ def renderData(data):
     Returns ascii representation of a hex string or list of binary strings
     '''
     binLines = checkBinLines(data)
-    asciiLines = [renderBinLine(i) for i in binLines]
+    asciiLines = map(renderBinLine, binLines)
     return '\n'.join(asciiLines)
 
 
