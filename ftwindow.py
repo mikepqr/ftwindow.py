@@ -77,11 +77,8 @@ def data2array(data):
     '''
     Convert hex string or list of binary strings to a numpy array
     '''
-    X = np.zeros((16, 8))
     binLines = checkBinLines(data)
-    for i in range(16):
-        X[i] = [str(j) for j in binLines[i]]
-    return X
+    return np.array([[float(i) for i in binLine] for binLine in binLines])
 
 
 def array2data(X):
