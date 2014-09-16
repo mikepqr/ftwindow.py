@@ -82,7 +82,7 @@ def data2array(data):
 
 def array2data(X):
     '''
-    Returns 32 digit hex representation of a (16,8) numpy array of 1s and 0s
+    Returns N digit hex representation of an (N/2, 8) numpy array of 1s and 0s
     '''
     # Convert each line to 8-digit binary string
     binLines = [''.join([str(i) for i in j]) for j in X]
