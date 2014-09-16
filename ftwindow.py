@@ -46,16 +46,6 @@ def extractAllData(tweets):
     return data
 
 
-def checkBinLines(s):
-    '''
-    Convert to list of binary strings if not already in that form
-    '''
-    if type(s) is str:  # FIXME: this is not a foolproof test
-        return hex2binLines(s)
-    else:
-        return binLines
-
-
 def renderBinLine(binLine):
     '''
     Returns a string of 'X' and ' ' given a string of '1' and '0'
@@ -67,7 +57,7 @@ def renderData(data):
     '''
     Returns ascii representation of a hex string or list of binary strings
     '''
-    binLines = checkBinLines(data)
+    binLines = hex2binLines(data)
     asciiLines = map(renderBinLine, binLines)
     return '\n'.join(asciiLines)
 
@@ -76,7 +66,7 @@ def data2array(data):
     '''
     Convert hex string or list of binary strings to a numpy array
     '''
-    binLines = checkBinLines(data)
+    binLines = hex2binLines(data)
     return np.array([[int(i) for i in binLine] for binLine in binLines])
 
 
