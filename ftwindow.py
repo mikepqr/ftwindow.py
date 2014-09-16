@@ -78,20 +78,16 @@ def data2array(data):
     Convert hex string or list of binary strings to a numpy array
     '''
     binLines = checkBinLines(data)
-    return np.array([[float(i) for i in binLine] for binLine in binLines])
+    return np.array([[int(i) for i in binLine] for binLine in binLines])
 
 
 def array2data(X):
     '''
     Returns 32 digit hex representation of a (16,8) numpy array of 1s and 0s
     '''
-    hexString = ''
-    # For each row of array...
-    for i in range(16):
-        # Convert to 8-digit binary string
-        binLine = reduce(lambda x, y: str(int(x)) + str(int(y)), X[i, :])
-        # Convert to 2-digit hex string and append
-        hexString += '{0:02X}'.format(int(binLine, 2))
+    # Convert each line to 8-digit binary string
+    binLines = [''.join([str(i) for i in j]) for j in X]
+    hexString = ''.join(['{0:02X}'.format(int(i, 2)) for i in binLines])
     return hexString
 
 
@@ -102,13 +98,14 @@ def averageData(threshold=False):
     tweets = parseFrames()  # dictionary
     allData_strings = extractAllData(tweets)  # list of hex strings
     allData_arrays = map(data2array, allData_strings)  # list of np arrays
-    avgData = reduce(lambda x, y: x + y, allData_arrays)/len(tweets)
+    sumData = reduce(lambda x, y: x + y, allData_arrays)
+    avgData = sumData.astype(float)/len(tweets)
 
     # Plot with e.g.
     # >>> plt.axis('off')
     # >>> plt.imshow(avgData_array, interpolation="nearest");
     # or threshold the data
-    avgData_threshold = np.zeros_like(avgData)
+    avgData_threshold = np.zeros_like(sumData)
     avgData_threshold[avgData > np.median(avgData)] = 1
     print array2data(avgData_threshold)
 
