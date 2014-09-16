@@ -12,8 +12,7 @@ def hex2binLines(hexString):
     hexStrings = [hexString[i:i+2] for i in range(0, len(hexString), 2)]
 
     # convert to padded binary representation
-    binLines = map(
-        lambda s: "{0:08b}".format(int(s, 16)), hexStrings)
+    binLines = map(lambda s: "{0:08b}".format(int(s, 16)), hexStrings)
 
     return binLines
 
